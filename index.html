@@ -26,17 +26,17 @@
             attribution: '&copy; OpenStreetMap'
         }).addTo(map);
 
-        const pigIcon = L.divIcon({
-            html: "🐷",
-            className: "",
-            iconSize: [40, 40]
-        });
+    const pigIcon = L.divIcon({
+    html: '<div style="font-size:48px;text-shadow:-2px -2px 0 white,2px -2px 0 white,-2px 2px 0 white,2px 2px 0 white,0 0 8px rgba(0,0,0,0.6);">🐷</div>',
+    className: "",
+    iconSize: [48, 48]
+});
 
-        const factoryIcon = L.divIcon({
-            html: "🏭",
-            className: "",
-            iconSize: [44, 44]
-        });
+const factoryIcon = L.divIcon({
+    html: '<div style="font-size:52px;text-shadow:-2px -2px 0 white,2px -2px 0 white,-2px 2px 0 white,2px 2px 0 white,0 0 8px rgba(0,0,0,0.6);">🏭</div>',
+    className: "",
+    iconSize: [52, 52]
+});
 
         fetch('customers.json')
             .then(response => response.json())
