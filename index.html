@@ -19,41 +19,60 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <script>
-       const map = L.map('map').setView([58.53, 5.74], 10);
 
-L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap'
-}).addTo(map);
+        const map = L.map('map').setView([58.53, 5.74], 10);
 
-fetch('customers.json')
-  .then(response => response.json())
-  .then(customers => {
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap'
+        }).addTo(map);
 
-    const markers = [];
+        const pigIcon = L.divIcon({
+            html: "🐷",
+            className: "",
+            iconSize: [24, 24]
+        });
 
-    customers.forEach(customer => {
+        const factoryIcon = L.divIcon({
+            html: "🏭",
+            className: "",
+            iconSize: [28, 28]
+        });
 
-      const marker = L.marker([
-        customer.lat,
-        customer.lng
-      ])
-      .addTo(map)
-      .bindPopup(customer.name);
+        fetch('customers.json')
+            .then(response => response.json())
+            .then(customers => {
 
-      markers.push([
-        customer.lat,
-        customer.lng
-      ]);
+                const markers = [];
 
-    });
+                customers.forEach(customer => {
 
-    const bounds = L.latLngBounds(markers);
+                    const icon =
+                        customer.name === "TINE JÆREN"
+                            ? factoryIcon
+                            : pigIcon;
 
-    map.fitBounds(bounds, {
-      padding: [50, 50]
-    });
+                    const marker = L.marker(
+                        [customer.lat, customer.lng],
+                        { icon: icon }
+                    )
+                    .addTo(map)
+                    .bindPopup(customer.name);
 
-  });
+                    markers.push([
+                        customer.lat,
+                        customer.lng
+                    ]);
+
+                });
+
+                const bounds = L.latLngBounds(markers);
+
+                map.fitBounds(bounds, {
+                    padding: [50, 50]
+                });
+
+            });
+
     </script>
 
 </body>
