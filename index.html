@@ -28,11 +28,31 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 fetch('customers.json')
   .then(response => response.json())
   .then(customers => {
+
+    const markers = [];
+
     customers.forEach(customer => {
-      L.marker([customer.lat, customer.lng])
-        .addTo(map)
-        .bindPopup(customer.name);
+
+      const marker = L.marker([
+        customer.lat,
+        customer.lng
+      ])
+      .addTo(map)
+      .bindPopup(customer.name);
+
+      markers.push([
+        customer.lat,
+        customer.lng
+      ]);
+
     });
+
+    const bounds = L.latLngBounds(markers);
+
+    map.fitBounds(bounds, {
+      padding: [50, 50]
+    });
+
   });
     </script>
 
